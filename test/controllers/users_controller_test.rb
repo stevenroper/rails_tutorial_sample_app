@@ -43,4 +43,28 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
+  # Doesn't work due to current admin_user set up (returns nil if no current_user and then trying to call admin? on a nil object throws an error)
+  # test 'should redirect destroy when not logged in' do
+  #   assert_no_difference 'User.count' do
+  #     delete :destroy, id: @user
+  #   end
+  #   assert_redirected_to login_url
+  # end
+
+  test 'should redirect destroy when logged in as non-admin' do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete :destroy, id: @user
+    end
+    assert_redirected_to root_url
+  end
+
+  test 'should delete user when logged in as admin' do
+    log_in_as(@user)
+    assert_difference 'User.count', -1 do
+      delete :destroy, id: @other_user
+    end
+    assert_redirected_to users_url
+  end
+
 end
