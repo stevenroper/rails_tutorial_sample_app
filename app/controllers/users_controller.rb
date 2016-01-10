@@ -19,9 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)     #Replace with final version. Kind of a hacky start
     if @user.save
-      log_in @user
-      flash[:success] = "Congrats! Your signup was successful. Welcome to the Sample App!"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:warning] = "Just one more step! Check your email for an activation link. Ready... GO!"
+      redirect_to root_url
     else
       render 'new'
     end

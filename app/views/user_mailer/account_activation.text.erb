@@ -1,0 +1,7 @@
+Well hi there, <%= @user.name %>!
+
+Thanks for signing up with my sample App! We just want to verify that the email address you signed up is valid.
+
+Click on the below link to activate your account and get started!
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email)%>
