@@ -18,3 +18,5 @@
 
 # Ignore rbenv files
 .ruby-version
+
+.DS_Store
